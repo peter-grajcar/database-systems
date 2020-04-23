@@ -1,3 +1,6 @@
+CREATE SYNONYM Flights for k.Flights
+CREATE SYNONYM Planes for k.Planes
+
 /*
  * 01. Vypište seznam všech letů
  */

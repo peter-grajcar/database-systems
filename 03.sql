@@ -1,3 +1,8 @@
+CREATE SYNONYM Student for l.Student
+CREATE SYNONYM Teacher for l.Teacher
+CREATE SYNONYM Course for l.Course
+CREATE SYNONYM CourseStudent for l.CourseStudent
+
 /*
  * Q1: “Students with grade 1 from some course”
  */

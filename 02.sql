@@ -1,3 +1,7 @@
+CREATE SYNONYM Cinemas for k.Cinemas
+CREATE SYNONYM Program for k.Program
+CREATE SYNONYM Movies for k.Movies
+
 /*
  * 01. Vypište seznam všech kin z New Yorku, setříděný sestupně dle kapacity
  */

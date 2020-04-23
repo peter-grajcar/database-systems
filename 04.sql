@@ -1,8 +1,11 @@
+CREATE SYNONYM Cinemas for k.Cinemas
+CREATE SYNONYM Program for k.Program
+CREATE SYNONYM Movies for k.Movies
+
 /*
  * 01. Vypište seznam kin, která nepromítala žádný film od Camerona.
  *     Setřiďte výsledek podle města a dále názvu kina
  */
-
 SELECT Cinemas.*
 FROM Cinemas
 WHERE NOT EXISTS(SELECT *
@@ -10,7 +13,7 @@ WHERE NOT EXISTS(SELECT *
                           INNER JOIN Movies ON Program.Title = Movies.Title
                  WHERE Movies.Director = 'Cameron'
                    AND Program.Name = Cinemas.Name)
-ORDER BY Cinemas.City, Cinemas.Name
+ORDER BY Cinemas.City, Cinemas.Name;
 
 
 /*
@@ -79,23 +82,24 @@ FROM Cinemas AS C1,
 WHERE C1.Name < C2.Name
   AND 1 = ALL (
     SELECT CASE WHEN T.A = T.B THEN 1 ELSE 0 END AS A
-    FROM (SELECT CC1.Name       AS N1,
-                 CC2.Name       AS N2,
+    FROM (SELECT C3.Name       AS N1,
+                 C4.Name       AS N2,
                  CASE
                      WHEN M.Title IN (SELECT DISTINCT Program.Title
                                       FROM Program
-                                      WHERE Program.Name = CC1.Name)
+                                      WHERE Program.Name = C3.Name)
                          THEN 1
                      ELSE 0 END AS A,
                  CASE
                      WHEN M.Title IN (SELECT DISTINCT Program.Title
                                       FROM Program
-                                      WHERE Program.Name = CC2.Name)
+                                      WHERE Program.Name = C4.Name)
                          THEN 1
                      ELSE 0 END AS B
-          FROM Cinemas AS CC1,
-               Cinemas AS CC2,
+          FROM Cinemas AS C3,
+               Cinemas AS C4,
                Movies AS M
          ) AS T
     WHERE T.N1 = C1.Name
-      AND T.N2 = C2.Name);
+      AND T.N2 = C2.Name
+);
